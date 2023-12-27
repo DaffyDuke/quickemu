@@ -1921,13 +1921,11 @@ function get_primtux() {
     local HASH=""
     local URL=""
     local ISO=""
-    local TMPURL=""
 
     ISO="PrimTux${RELEASE}-amd64-${EDITION}.iso"
-
-    TMPURL=$(wget -q -S -O- --max-redirect=0 "https://sourceforge.net/projects/primtux/files/Distribution/${ISO}/download" 2>&1 | grep -i Location | cut -d' ' -f4)
-    URL=${TMPURL%\?*}
-    echo "${URL} ${HASH}"
+    URL="https://sourceforge.net/projects/primtux/files/Distribution"
+    HASH=$(wget -q -O- "${URL}/${ISO}.md5" | grep "${ISO}" | cut -d' ' -f1)
+    echo "${URL}/${ISO} ${HASH}"
 }
 
 function get_reactos() {
